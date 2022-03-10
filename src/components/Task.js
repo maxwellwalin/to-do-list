@@ -7,26 +7,35 @@ const Task = ({ id, content, done, index }) => {
   const { deleteTask, toggleDone } = useGlobalContext();
 
   return (
+    // draggable component wrapper from react-beautiful-dnd
     <Draggable key={ id } draggableId={ id } index={ index }>
+      {/* required reference/set up from react-beautiful-dnd documentation */ }
       { (provided, snapshot) => (
         <li
           ref={ provided.innerRef }
           { ...provided.draggableProps }
           { ...provided.dragHandleProps }
+          // styling for when draggable item is being dragged
           style={ {
             ...provided.draggableProps.style,
-            boxShadow: snapshot.isDragging ? "0 0 10rem #f4fec1" : "none",
-            opacity: snapshot.isDragging ? "1" : provided.draggableProps.style.opacity,
+            boxShadow: snapshot.isDragging ? "0 0 8rem #f4fec1" : "none",
           } }
+
           className={ `task ${done && "task-done"}` }
         >
+          {/* done toggle button */ }
           <button onClick={ () => toggleDone(id) }>
             { done ? <MdCheckBox /> : <MdCheckBoxOutlineBlank /> }
           </button>
+
+          {/* task content */ }
           <p>{ content }</p>
+
+          {/* delete task button */ }
           <button onClick={ () => deleteTask(id) }>
             <MdDeleteOutline />
           </button>
+
         </li>
       ) }
     </Draggable>

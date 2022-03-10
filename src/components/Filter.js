@@ -6,6 +6,7 @@ export default function Filter() {
 
     return (
         <div id='filtersContainer'>
+            {/* filter buttons with active classes that filter tasks onClick */ }
             <div id='filters'>
                 <button
                     data-filter='all'
@@ -29,6 +30,8 @@ export default function Filter() {
                     Incomplete
                 </button>
             </div>
+
+            {/* task count based on incomplete tasks in tasks state */ }
             <div id='taskCount'>
                 Tasks Left: { tasks.filter(task => !task.done).length }
             </div>

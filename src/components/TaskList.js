@@ -7,10 +7,13 @@ const TaskList = () => {
   // get global context
   const { tasks, filter } = useGlobalContext();
 
-  // define filteredTasks variable and update it based on the filter
+  // define filteredTasks variable and update it with the filtered lists of task objects based on the current filter state
   let filteredTasks;
 
   switch (filter) {
+    case "all":
+      filteredTasks = [...tasks];
+      break;
     case "completed":
       filteredTasks = tasks.filter((task) => task.done);
       break;
@@ -33,17 +36,17 @@ const TaskList = () => {
     // wrap task list in droppable component (react-beautiful-dnd)
     <Droppable droppableId='list'>
       { (provided) => (
-        <div
+        <ul
           className='taskContainer'
           div ref={ provided.innerRef }
           { ...provided.droppableProps }
         >
-          {/* add the filtered tasks list */ }
-          <FilteredTaskList tasks={ tasks } />
+          {/* add the filtered Task list of components */ }
+          <FilteredTaskList tasks={ filteredTasks } />
 
           {/* add placeholder for current expected drop location */ }
           { provided.placeholder }
-        </div>
+        </ul>
       ) }
     </Droppable>
   );

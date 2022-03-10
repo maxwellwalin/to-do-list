@@ -21,10 +21,18 @@ const App = () => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
-  // handle drag and drop end (react-beautiful-dnd)
-  const onDragEnd = (param) => {
-    const sourceIndex = param.source.index;
-    const destinationIndex = param.destination?.index;
+  // handle drag and drop end, based on react-beautiful-dnd documentation
+  const onDragEnd = (result) => {
+    if (!result.destination) {
+      return;
+    }
+
+    if (result.destination.index === result.source.index) {
+      return;
+    }
+
+    const sourceIndex = result.source.index;
+    const destinationIndex = result.destination?.index;
     const rearrangedTasks = [...tasks];
 
     const [removed] = rearrangedTasks.splice(sourceIndex, 1);
