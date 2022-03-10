@@ -4,14 +4,13 @@ import { useGlobalContext } from "../context";
 import Task from "./Task";
 
 const TaskList = () => {
+  // get global context
   const { tasks, filter } = useGlobalContext();
 
+  // define filteredTasks variable and update it based on the filter
   let filteredTasks;
 
   switch (filter) {
-    case "all":
-      filteredTasks = [...tasks];
-      break;
     case "completed":
       filteredTasks = tasks.filter((task) => task.done);
       break;
@@ -23,19 +22,28 @@ const TaskList = () => {
       break;
   }
 
+  // memo that takes in tasks state (after filtration) and maps through each task object, creating all Task components
+  const FilteredTaskList = React.memo(function taskList({ tasks }) {
+    return tasks.map((task, i) => (
+      <Task key={ task.id } { ...task } index={ i } />
+    ));
+  });
+
   return (
-    <Droppable droppableId='droppable'>
+    // wrap task list in droppable component (react-beautiful-dnd)
+    <Droppable droppableId='list'>
       { (provided) => (
-        <ul
+        <div
           className='taskContainer'
-          ref={ provided.innerRef }
+          div ref={ provided.innerRef }
           { ...provided.droppableProps }
         >
-          { filteredTasks.map((task, i) => (
-            <Task key={ task.id } { ...task } index={ i } />
-          )) }
+          {/* add the filtered tasks list */ }
+          <FilteredTaskList tasks={ tasks } />
+
+          {/* add placeholder for current expected drop location */ }
           { provided.placeholder }
-        </ul>
+        </div>
       ) }
     </Droppable>
   );

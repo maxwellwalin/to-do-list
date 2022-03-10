@@ -6,6 +6,7 @@ import { AppProvider } from "./context";
 
 ReactDOM.render(
   <React.StrictMode>
+    {/* wrap app in context provider */ }
     <AppProvider>
       <App />
     </AppProvider>

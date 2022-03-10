@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { v4 as uuid } from "uuid";
 
+// task seeds for first time users
 const sampleTasks =
   [
     {
@@ -25,13 +26,16 @@ const sampleTasks =
     }
   ];
 
+// get tasks from local storage if they exist, or use the sample tasks if "tasks" does not exist in local storage yet (first time users)
 const getTasks = () => {
   const tasks = localStorage.getItem("tasks");
   return tasks ? JSON.parse(tasks) : sampleTasks;
 };
 
+// define context var
 const AppContext = React.createContext(null);
 
+// create app provider
 const AppProvider = ({ children }) => {
   // create states
   const [tasks, setTasks] = useState(getTasks());
@@ -106,6 +110,7 @@ const AppProvider = ({ children }) => {
   );
 };
 
+// set global context
 const useGlobalContext = () => {
   return useContext(AppContext);
 };

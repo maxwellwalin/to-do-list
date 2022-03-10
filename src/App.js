@@ -6,6 +6,7 @@ import TaskList from "./components/TaskList";
 import { useGlobalContext } from "./context";
 
 const App = () => {
+  // get global context
   const {
     tasks,
     setTasks,
@@ -15,10 +16,12 @@ const App = () => {
     deleteDone
   } = useGlobalContext();
 
+  // useEffect to update local storage tasks whenever tasks state changes
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
+  // handle drag and drop end (react-beautiful-dnd)
   const onDragEnd = (param) => {
     const sourceIndex = param.source.index;
     const destinationIndex = param.destination?.index;
