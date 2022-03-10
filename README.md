@@ -17,6 +17,9 @@
 * [react-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd)
 * [react-icons](https://react-icons.github.io/react-icons/)
 
+### Live Demo
+
+Check out the live demo of this React app, found [here](https://todo-list-focus360.herokuapp.com/).
 <!-- GETTING STARTED -->
 ## Getting Started
 

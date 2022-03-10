@@ -55,7 +55,8 @@ const AppProvider = ({ children }) => {
     try {
       const jsonData = JSON.parse(content);
       setTasks([...tasks, ...jsonData.tasks])
-    } catch {
+    } catch (e) {
+      console.log(e)
       // if parsing content fails, since there are no alternative JSON inputs, assume content is plain text, create task object, updated task state, and clear content input
       const newTask = {
         id: uuid().slice(0, 8),
