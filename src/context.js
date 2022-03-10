@@ -33,7 +33,7 @@ const getTasks = () => {
 };
 
 // define context var
-const AppContext = React.createContext(null);
+const GlobalContext = React.createContext(null);
 
 // create app provider
 const AppProvider = ({ children }) => {
@@ -90,7 +90,7 @@ const AppProvider = ({ children }) => {
   };
 
   return (
-    <AppContext.Provider
+    <GlobalContext.Provider
       value={ {
         tasks,
         setTasks,
@@ -106,13 +106,13 @@ const AppProvider = ({ children }) => {
       } }
     >
       { children }
-    </AppContext.Provider>
+    </GlobalContext.Provider>
   );
 };
 
 // set global context
 const useGlobalContext = () => {
-  return useContext(AppContext);
+  return useContext(GlobalContext);
 };
 
-export { AppContext, AppProvider, useGlobalContext };
+export { GlobalContext, AppProvider, useGlobalContext };
