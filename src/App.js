@@ -1,26 +1,73 @@
-import logo from './logo.svg';
-import './App.css';
-import Header from '../components/Header/Header';
+import React, { useEffect } from "react";
+import { DragDropContext } from "react-beautiful-dnd";
+import Filter from "./components/Filter";
+import Header from "./components/Header";
+import TaskList from "./components/TaskList";
+import { useGlobalContext } from "./context";
 
-function App() {
+const App = () => {
+  const {
+    tasks,
+    setTasks,
+    content,
+    setContent,
+    addTask,
+    deleteDone
+  } = useGlobalContext();
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
+
+  const onDragEnd = (param) => {
+    const sourceIndex = param.source.index;
+    const destinationIndex = param.destination?.index;
+    const rearrangedTasks = [...tasks];
+
+    const [removed] = rearrangedTasks.splice(sourceIndex, 1);
+    rearrangedTasks.splice(destinationIndex, 0, removed);
+    setTasks(rearrangedTasks);
+  };
+
   return (
-    <div className="App">
+    <>
       <Header />
       <main>
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        {/* Form - Input and Add Button */ }
+        <form onSubmit={ addTask }>
+          <input
+            type='text'
+            placeholder="Let's get some stuff done!"
+            value={ content }
+            onChange={ (e) => setContent(e.target.value) }
+          />
+          <button type='submit'>Add</button>
+        </form>
+
+        {/* If there are any tasks, render the Filter and TaskList Components; if not, display message. */ }
+        <DragDropContext onDragEnd={ onDragEnd }>
+          { tasks.length > 0 ? (
+            <>
+              <Filter />
+              <TaskList />
+            </>
+          ) : (
+            <p className='no-tasks'>You're either super effecient or haven't added any tasks, yet!</p>
+          ) }
+        </DragDropContext>
+
+        {/* If there are any done tasks, render the Delete Completed Button. */ }
+        { tasks.filter(task => task.done).length > 0 && (
+          <button
+            className='btn-delete-done'
+            onClick={ deleteDone }
+          >
+            Delete Completed Tasks
+          </button>
+        ) }
       </main>
-    </div>
+    </>
   );
-}
+};
 
 export default App;
