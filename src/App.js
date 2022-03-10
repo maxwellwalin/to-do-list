@@ -4,8 +4,11 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      <header>
+        <h1>React To-Do List</h1>
         <img src={logo} className="App-logo" alt="logo" />
+      </header>
+      <main>
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
@@ -17,7 +20,7 @@ function App() {
         >
           Learn React
         </a>
-      </header>
+      </main>
     </div>
   );
 }
