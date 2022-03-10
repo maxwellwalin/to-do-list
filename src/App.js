@@ -1,13 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
+import Header from '../components/Header/Header';
 
 function App() {
   return (
     <div className="App">
-      <header>
-        <h1>React To-Do List</h1>
-        <img src={logo} className="App-logo" alt="logo" />
-      </header>
+      <Header />
       <main>
         <p>
           Edit <code>src/App.js</code> and save to reload.
